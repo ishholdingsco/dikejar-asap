@@ -156,7 +156,7 @@ canvas{display:block;width:100%;height:100%}
    <div><b id="sIspu">0</b><span>ISPU</span></div>
   </div>
   <div class="o-case">
-   <div class="o-sus"><div class="o-zero"><b>0</b><span>tersangka dari PT SJP</span></div><div class="o-zero o-one"><b>1</b><span>tersangka: “oknum warga” (kamu)</span></div></div>
+   <div class="o-sus"><div class="o-zero"><b>0</b><span>tersangka dari PT SJP</span></div><div class="o-zero o-one"><b>1</b><span>kriminalisasi: “oknum warga” (kamu)</span></div></div>
    <p class="pr">“Kami menyampaikan duka cita mendalam dan tetap berkomitmen pada zero burning.”<small>PT SJP · penyelidikan dihentikan.</small></p>
   </div>
   <div class="fact" id="fact"></div>
@@ -381,7 +381,7 @@ const CAUSE_SHORT={ispa:'meninggal karena ISPA',bulldozer:'tertabrak bulldozer P
 $('btnShare').onclick=()=>{const url=location.origin+location.pathname,
   text=`Aku bertahan ${Math.floor(S.dist)} m sebelum ${CAUSE_SHORT[S.cause]||'tumbang'}.
 Tersangka dari PT SJP: 0.
-Tersangka “oknum warga”: 1.
+Kriminalisasi “oknum warga”: 1.
 
 #DikejarAsap`;
  if(navigator.share&&matchMedia('(pointer:coarse)').matches)navigator.share({text,url}).catch(()=>{});
