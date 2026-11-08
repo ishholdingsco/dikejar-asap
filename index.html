@@ -486,7 +486,7 @@ function update(dt){
  const tr=tierOf(S.ispu);if(tr>S.tier&&tr>0)say('Status ISPU',TIER_TOAST[tr]);S.tier=tr;
  S.hot=Math.max(S.hot,Math.floor(12+S.t*6+S.ispu*2.2));
  S.fire=Math.max(0,S.fire-dt*.3);S.shake=Math.max(0,S.shake-dt);S.pulse=Math.max(0,S.pulse-dt*3);
- while(S.spawnAt<S.dist+78){spawnRow(S.spawnAt);S.spawnAt+=S.speed*.8+rand(S.speed*.45);}
+ while(S.spawnAt<S.dist+78){spawnRow(S.spawnAt);{const sp=Math.max(S.speed,13);S.spawnAt+=sp*.8+rand(sp*.45);}}
  for(const o of S.objs){
   const z=o.wz-S.dist,inLane=Math.abs(S.px-o.lane)<.45;
   if(o.type==='air'||o.type==='masker'){
