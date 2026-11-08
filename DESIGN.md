@@ -90,7 +90,7 @@ Cara memberi masukan: tandai ID dengan ✅ pakai / ❌ buang / ✏️ ubah, atau
 |---|---|---|
 | G1 | Teks penyebab kematian (ISPA, bulldozer, gambut, spanduk, api) | ✅ |
 | G2 | "PT SJP menyampaikan duka cita mendalam dan berkomitmen pada zero burning." | ✅ |
-| G3 | Statistik: Jarak · Liter air · Kemarau dilalui · **0 tersangka dari PT SJP · 1 tersangka: oknum warga (kamu)** | ✅ |
+| G3 | Statistik: Jarak · Liter air · Kemarau dilalui · **0 tersangka dari PT SJP · 1 tersangka: “oknum warga” (kamu)** | ✅ |
 | G4 | Satu fakta nyata + sumber | ✅ (verifikasi ulang) |
 | G5 | Kamera berbalik ke siluet yang tersisa di asap | ⏳ |
 
