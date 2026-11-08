@@ -1023,7 +1023,7 @@ function render(){
  const f=S.ispu/500,ra=S.rain>0?clamp(Math.min(S.rain,RAIN_DUR-S.rain)):0,dying=mode==='dying'||mode==='over';
  VIS=visDist();
  SKYT=mixc(mixc(C.skyTop0,C.skyTop1,f),C.rain,ra*.55);HZ=mixc(mixc(C.hz0,C.hz1,f),C.rain,ra*.4);
- const hor=S.intro>0?1-introE:0;if(hor>0){SKYT=mixc(SKYT,[22,8,6],hor);HZ=mixc(HZ,[128,40,20],hor*.8);}
+ const hor=Math.max(S.intro>0?1-introE:0,mode==='menu'?0:(.42+.5*f)*(1-ra*.6));if(hor>0){SKYT=mixc(SKYT,[22,8,6],hor);HZ=mixc(HZ,[128,40,20],hor*.8);}
  buildFar(f);
  ctx.save();
  if(S.shake>0)ctx.translate(rand(-1,1)*S.shake*12,rand(-1,1)*S.shake*12);
@@ -1064,7 +1064,7 @@ function render(){
  {const gh=dying&&(S.cause==='api'||S.cause==='lubang')?1.5:fireHeat(),fk=.85+.15*Math.sin(S.t*19)*Math.sin(S.t*5.7);ctx.save();ctx.globalCompositeOperation='lighter';
   const gg=ctx.createRadialGradient(W/2,H*1.08,0,W/2,H*1.08,H*(.38+gh*.25));gg.addColorStop(0,`rgba(190,64,22,${(.16+gh*.28)*fk})`);gg.addColorStop(1,'rgba(190,64,22,0)');
   ctx.fillStyle=gg;ctx.fillRect(-20,HOR,W+40,H-HOR+20);ctx.restore();}
- if(S.intro>0||f>.25){const amp=S.intro>0?.5+1.1*(1-introE):(f-.25)*.8,sp=puffOf([255,96,30]);ctx.save();ctx.globalCompositeOperation='lighter';
+ if(S.intro>0||mode!=='menu'){const amp=S.intro>0?Math.max(.5+1.1*(1-introE),.4+f):.4+f,sp=puffOf([255,96,30]);ctx.save();ctx.globalCompositeOperation='lighter';
   for(let i=0;i<34;i++){const h=Math.abs(Math.sin(i*91.7)*4373.1)%1,side=i%2?1:-1,x=side*(2.6+h*16),wz=((i*7.3+h*40)%70),z=(((wz-S.dist)%70)+70)%70+(.4-CAMZ);if(z<.6-CAMZ)continue;
    const p=proj(x,0,z),r=Math.max(4,(1.6+h*2.2)*p.s),fl=.7+.3*Math.sin(S.t*(6+h*5)+i),al=clamp(amp*fl*fogVis(Math.max(z,0))*(1-ra*.7));ctx.globalAlpha=al;ctx.drawImage(sp,p.x-r,p.y-r*.5,r*2,r);ctx.drawImage(sp,p.x-r*.35,p.y-r*.15,r*.7,r*.3);}
   ctx.restore();ctx.globalAlpha=1;}
@@ -1102,7 +1102,7 @@ function render(){
  if(S.dust>0){ctx.fillStyle=`rgba(176,138,104,${(S.dust*.42).toFixed(3)})`;ctx.fillRect(-20,-20,W+40,H+40);}
  // vignette berdenyut (K4), lalu grain
  // satu lapisan siap pakai (vignette + grain), digeser acak sedikit supaya grain tetap hidup
- ctx.globalAlpha=clamp(.12+f*.5+S.pulse*.18+hor*.55);ctx.drawImage(vignOf(),-40+rand(-20,20),-40+rand(-20,20));ctx.globalAlpha=1;
+ ctx.globalAlpha=clamp(.12+f*.5+S.pulse*.18+hor*(S.intro>0?.55:.3));ctx.drawImage(vignOf(),-40+rand(-20,20),-40+rand(-20,20));ctx.globalAlpha=1;
  if(dying){ctx.fillStyle=`rgba(13,12,10,${clamp(S.dieT/1.6)*.85})`;ctx.fillRect(-20,-20,W+40,H+40);}
  ctx.restore();
 }
