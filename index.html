@@ -269,6 +269,7 @@ function aInit(){
  AU.fire=g(0);src(bb).connect(flt('lowpass',520)).connect(AU.fire).connect(m);
  AU.breath=g(0);src(wb).connect(flt('bandpass',1000,.8)).connect(AU.breath).connect(m);
  AU.rain=g(0);src(wb).connect(flt('highpass',3200)).connect(AU.rain).connect(m);
+ AU.smoke=g(0);src(wb).connect(flt('bandpass',650,.6)).connect(flt('lowpass',1400)).connect(AU.smoke).connect(m); // desis asap (layar awal & hasil)
  AU.drone=g(0);const lp=flt('lowpass',170);lp.connect(AU.drone).connect(m);
  [55,55.7,82.4].forEach(f=>{const o=ac.createOscillator();o.type='sawtooth';o.frequency.value=f;o.connect(lp);o.start();});
  AU.ph=0;AU.beat=0;AU.note=0;
@@ -297,7 +298,12 @@ function aUpdate(dt,playing){
  AU.breath.gain.setTargetAtTime(playing?(.012+f*.17)*b:0,now,.03);
  AU.drone.gain.setTargetAtTime(playing&&f>.22?(f-.22)*.22:0,now,.3);
  AU.rain.gain.setTargetAtTime(playing&&S.rain>0?.16:0,now,.4);
- if(!playing)return;
+ // suasana layar awal & hasil: desis asap yang bernapas pelan + gemeretak bara yang jarang
+ AU.smoke.gain.setTargetAtTime(playing?0:.03+.018*Math.sin(now*.6)+.01*Math.sin(now*1.7+1),now,.5);
+ if(!playing){
+  if(Math.random()<dt*1.6)burst('highpass',rand(1500,3600),.8,rand(.012,.035),rand(.015,.05),rand(-.7,.7));
+  if(Math.random()<dt*.3){const n=2+Math.floor(Math.random()*3),p=rand(-.6,.6);for(let k=0;k<n;k++)burst('highpass',rand(2000,4200),.9,rand(.01,.025),rand(.02,.045),p,k*rand(.04,.11));}
+  return;}
  if(Math.random()<dt*(3+heat*22))burst('highpass',rand(1800,4000),.7,rand(.02,.05),rand(.03,.12)*(.4+heat),rand(-.8,.8));
  if(f>.4&&Math.random()<dt*f*.7){cough(rand(-.2,.2),.06+f*.14);S.coughT=.7;}
  if(f>.25&&f<.65&&Math.random()<dt*.12)chirp();
@@ -375,7 +381,9 @@ function start(){aInit();aMaster(.9,.05);reset();mode='play';
 }
 function pause(){mode='paused';$('pause').classList.remove('hide');if(AU.ac)AU.ac.suspend();}
 function resume(){mode='play';$('pause').classList.add('hide');if(AU.ac)AU.ac.resume();last=performance.now();}
-$('btnStart').onclick=start;$('btnAgain').onclick=start;
+$('btnStart').onclick=start;
+// browser baru mengizinkan suara setelah ada sentuhan: ketuk di mana saja pada layar awal untuk mendengar suasana bara
+$('start').addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;aInit();aMaster(.8,1);});$('btnAgain').onclick=start;
 // Bagikan hasil: di HP pakai menu bagikan bawaan, di desktop buka X dengan teks terisi
 const CAUSE_SHORT={ispa:'meninggal karena ISPA',bulldozer:'tertabrak bulldozer PT SJP',excavator:'terlindas excavator PT SJP',truk:'terlindas truk sawit PT SJP',gambut:'terperosok ke gambut terbakar',baliho:'menabrak spanduk zero burning',api:'disusul api'};
 $('btnShare').onclick=()=>{const url=location.origin+location.pathname,
@@ -410,6 +418,7 @@ function showOver(){
  else $('best').textContent='Rekor jarak: '+best+' m';
  $('over').classList.remove('hide');requestAnimationFrame(()=>$('over').classList.add('show'));
  setTimeout(()=>{if(mode==='over')$('siaga').style.opacity=1;},2600);
+ aMaster(.75,1.5); // suara kembali pelan untuk suasana bara di layar hasil
 }
 
 // ================= Subtitle =================
