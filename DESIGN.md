@@ -57,7 +57,7 @@ Cara memberi masukan: tandai ID dengan ✅ pakai / ❌ buang / ✏️ ubah, atau
 ## D. Rintangan
 | ID | Elemen | Aksi | Status |
 |---|---|---|---|
-| D1 | Kayu tebangan | Lompat (kalau tertabrak, tersandung) | ✅ |
+| D1 | Tumpukan berondolan sawit tercecer dari truk | Lompat (kalau tertabrak, tersandung) | ✅ |
 | D2 | Spanduk "ZERO BURNING ✓" melintang | Merunduk | ✅ |
 | D3 | Bulldozer PT SJP | Pindah jalur (mematikan) | ✅ |
 | D3b | Excavator PT SJP yang sedang menggali | Pindah jalur (mematikan) | ✅ |

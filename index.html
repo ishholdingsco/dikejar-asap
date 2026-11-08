@@ -884,10 +884,18 @@ function drawTruck(o,z){
  workLights(s,[[-.5,.66+bob],[.5,.66+bob]],o,z,false);
  ctx.restore();
 }
-function drawLog(o,z){const p=proj(o.lane*LW,0,z),s=p.s,w=LW*.92*s,h=.46*s,c=dcol(z);ctx.globalAlpha=fogVis(z);ctx.fillStyle=rgb(c);ctx.beginPath();
- ctx.ellipse(p.x-w/2+h*.22,p.y-h/2,h*.22,h/2,0,0,7);ctx.rect(p.x-w/2+h*.22,p.y-h,w-h*.44,h);ctx.ellipse(p.x+w/2-h*.22,p.y-h/2,h*.22,h/2,0,0,7);ctx.fill();
- ctx.fillStyle=rgb(mixc(c,HZ,.35));ctx.beginPath();ctx.ellipse(p.x+w/2-h*.22,p.y-h/2,h*.16,h*.38,0,0,7);ctx.fill();
- const e=.5+.5*Math.sin(S.t*7+o.seed*9);ctx.fillStyle=C.red;ctx.globalAlpha=fogVis(z)*e;ctx.beginPath();ctx.ellipse(p.x+w/2-h*.22,p.y-h/2,h*.05,h*.12,0,0,7);ctx.fill();ctx.globalAlpha=1;}
+// tumpukan berondolan sawit yang tercecer dari truk: gundukan rendah buah lonjong hitam-ungu sampai merah-jingga
+const BRON=(()=>{const a=[];let r=11;const R=()=>(r=(r*16807)%2147483647)/2147483647;
+ for(let k=0;k<46;k++){const u=R()*2-1,v=R()*2-1,h=Math.max(0,1-(u*u*.9+v*v))*(.75+R()*.25);a.push({u,v,y:h*.3+R()*.03,c:R(),r:.055+R()*.02,rot:R()*3});}
+ return a.sort((p,q)=>q.v-p.v||p.y-q.y);})();
+function drawLog(o,z){const fv=fogVis(z);if(fv<=0)return;const x=o.lane*LW,base=dcol(z),hot=clamp(fireHeat()*.4)*clamp(1-z/18);
+ const tint=c=>rgb(mixc(mixc(c,base,clamp(z/(VIS*.9))*.7),[200,86,34],hot*.25));
+ ctx.globalAlpha=fv;const g=proj(x,0,z+.2);ctx.fillStyle=rgb(mixc(base,[60,38,26],.35),.35);ctx.beginPath();ctx.ellipse(g.x,g.y,LW*.5*g.s,LW*.12*g.s,0,0,7);ctx.fill(); // bayangan
+ const FR=[[38,14,12],[86,22,16],[150,44,22],[206,96,40]];
+ for(const b of BRON){const p=proj(x+b.u*LW*.44,b.y,z+.2+b.v*.28),rr=b.r*p.s;if(rr<.4)continue;
+  const k=b.c<.3?0:b.c<.6?1:b.c<.85?2:3;ctx.fillStyle=tint(FR[k]);ctx.beginPath();ctx.ellipse(p.x,p.y-rr*.6,rr,rr*.82,b.rot,0,7);ctx.fill();
+  if(rr>3){ctx.fillStyle=rgb([255,226,180],.25);ctx.beginPath();ctx.ellipse(p.x-rr*.3,p.y-rr*.9,rr*.28,rr*.18,0,0,7);ctx.fill();}}
+ ctx.globalAlpha=1;}
 function drawBanner(o,z){const x=o.lane*LW,g=proj(x,0,z),t=proj(x,1.95,z),bt=proj(x,.85,z),s=g.s,w=LW*.98*s,c=rgb(dcol(z)),fv=fogVis(z),bh=bt.y-t.y;
  ctx.globalAlpha=fv;ctx.fillStyle=c;ctx.fillRect(g.x-w/2,t.y,.05*s,g.y-t.y);ctx.fillRect(g.x+w/2-.05*s,t.y,.05*s,g.y-t.y);
  // spanduk paling jelas di kabut
