@@ -61,6 +61,8 @@ Cara memberi masukan: tandai ID dengan ✅ pakai / ❌ buang / ✏️ ubah, atau
 | D2 | Spanduk "ZERO BURNING ✓" melintang | Merunduk | ✅ |
 | D3 | Bulldozer PT SJP | Pindah jalur (mematikan) | ✅ |
 | D3b | Excavator PT SJP yang sedang menggali | Pindah jalur (mematikan) | ✅ |
+| D8 | Lubang jalan tanah (kemarau: lompat, tersandung; hujan: kubangan lumpur, melambat). Tersandung 2x → disusul api: "Jalan rusak bukan prioritas pembangunan." | Lompat | ✅ |
+| D9 | Debu dari truk sawit: jarak pandang turun beberapa detik | — | ✅ |
 | D3c | Truk pengangkut sawit PT SJP (bak penuh tandan). Game over: “Batang pohon” hancur terlindas ~~truk~~ sistem | Pindah jalur (mematikan) | ✅ |
 | D4 | Gambut terbakar dari dalam (retakan menyala, berasap) | Lompat (mematikan) | ✅ |
 | D5 | Kanal pengering yang dibuat perusahaan | Lompat | ⏳ |
