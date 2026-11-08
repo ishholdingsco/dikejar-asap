@@ -7,6 +7,19 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Dikejar Asap</title>
+<meta name="description" content="Game satir tentang karhutla. Kamu petani yang dikejar asap, api, dan bulldozer. Kamu tidak bisa menang.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ishholdingsco.github.io/dikejar-asap/">
+<meta property="og:title" content="Dikejar Asap">
+<meta property="og:description" content="Game satir tentang karhutla. Kamu petani yang dikejar asap, api, dan bulldozer. Kamu tidak bisa menang.">
+<meta property="og:image" content="https://ishholdingsco.github.io/dikejar-asap/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="id_ID">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dikejar Asap">
+<meta name="twitter:description" content="Game satir tentang karhutla. Kamu petani yang dikejar asap, api, dan bulldozer. Kamu tidak bisa menang.">
+<meta name="twitter:image" content="https://ishholdingsco.github.io/dikejar-asap/og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@100;300;800&family=Instrument+Serif:ital@0;1&family=Archivo+Narrow:wght@400;600&display=swap">
 <style>
@@ -92,7 +105,8 @@ canvas{display:block;width:100%;height:100%}
 .fact small{display:block;font-size:9.5px;opacity:.6;margin-top:5px;letter-spacing:.08em}
 .o-end{display:flex;flex-direction:column;gap:10px;align-items:stretch;margin-top:auto}
 #siaga{font:600 8px/1.4 var(--f-lab);letter-spacing:.26em;text-transform:uppercase;color:var(--red);text-align:center;opacity:0;transition:opacity 1s}
-#btnAgain{color:#ece8dc;width:100%;padding-block:16px}
+#btnAgain,#btnShare{color:#ece8dc;width:100%;padding:16px 8px 16px 12px;letter-spacing:.3em}
+.o-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}#btnAgain{background:#ece8dc;color:#0d0c0a;border-color:#ece8dc}
 #best{font:400 10.5px/1 var(--f-lab);letter-spacing:.06em;opacity:.5;text-align:center}
 @media (max-height:700px){#over{gap:16px;padding-top:26px}#cause{font-size:28px}.o-zero b{font-size:44px}.o-one b{font-size:22px}.o-sus{gap:8px}.fact{font-size:11.5px;padding:9px 12px}}
 @media (prefers-reduced-motion:reduce){#hud.danger #ispuVal{animation:none}}
@@ -147,7 +161,7 @@ canvas{display:block;width:100%;height:100%}
   <div class="fact" id="fact"></div>
   <div class="o-end">
    <div id="siaga">Status siaga darurat karhutla<br>belum ditetapkan</div>
-   <button class="btn" id="btnAgain">Lari lagi</button>
+   <div class="o-btns"><button class="btn" id="btnAgain">Lari lagi</button><button class="btn" id="btnShare">Bagikan</button></div>
    <div id="best"></div>
   </div>
  </div>
@@ -193,13 +207,13 @@ const tierOf=v=>TIERS.findIndex(t=>v<=t.max);
 
 // ================= Teks satire =================
 const TICK=[
- [["202 ribu hektare lahan terbakar sepanjang Januari–Agustus 2026.", "SiPongi KLHK via Tempo", "https://www.tempo.co/lingkungan/hektare-terbakar-karhutla-2026-2283887"],["Luas karhutla 2026 naik 69% dibanding periode yang sama tahun lalu.", "SiPongi KLHK via Tempo", "https://www.tempo.co/lingkungan/hektare-terbakar-karhutla-2026-2283887"],"PT Sawit Juga Pohon raih penghargaan Perusahaan Peduli Lingkungan.",["Juli 2026: hampir 95 ribu hektare terbakar hanya dalam satu bulan.", "Katadata", "https://green.katadata.co.id/berita/6a951ce53f3c8/karhutla-2026-meluas-pakar-soroti-lemahnya-upaya-pencegahan"],"Sawit juga pohon, mari hijaukan Indonesia!"],
- [["Kalimantan Barat jadi provinsi dengan lahan terbakar terluas 2026: 38 ribu hektare.", "SiPongi KLHK via Tempo", "https://www.tempo.co/lingkungan/hektare-terbakar-karhutla-2026-2283887"],["Papua Selatan menyusul: 25,8 ribu hektare terbakar tahun ini.", "SiPongi KLHK via Tempo", "https://www.tempo.co/lingkungan/hektare-terbakar-karhutla-2026-2283887"],["21 Agustus 2026: 8.638 titik panas terpantau di Kalimantan.", "Kompas.id", "https://www.kompas.id/artikel/melihat-data-titik-panas-dan-karhutla-di-kalimantan-yang-kian-mengkhawatirkan"],"Titik api berada di luar area konsesi kami.","Perut butuh nasi, bukan udara bersih. Jangan malas."],
- [["Sekolah tatap muka TK–SMP dihentikan akibat asap.", "Catrawarta", "https://www.catrawarta.com/warta/kabut-asap-karhutla-masih-mengancam-kalimantan-sekolah-diliburkan-hingga-kasus-ispa-melonjak-di-kaltim-dan-kalbar/"],["Sekolah tatap muka diliburkan sejak 23 September 2026.", "Catrawarta", "https://www.catrawarta.com/warta/kabut-asap-karhutla-masih-mengancam-kalimantan-sekolah-diliburkan-hingga-kasus-ispa-melonjak-di-kaltim-dan-kalbar/"],["Kerugian karhutla 2026 diperkirakan bisa tembus Rp123 triliun.", "Betahita", "https://www.betahita.id/berita/12317/kerugian-akibat-karhutla-2026-bisa-tembus-rp123-t"],"Rapat koordinasi penanganan karhutla dijadwalkan saat situasi sudah kondusif."],
- [["288.540 kasus ISPA di 63 kabupaten/kota per 14 Oktober 2026.", "Kemenkes via Kumparan", "https://kumparan.com/hajfi-maricar/karhutla-2026-jutaan-warga-terdampak-asap-ratusan-ribu-terserang-ispa-28Rdqw8Z6Md"],["64.913 di antaranya balita.", "Kemenkes via Kumparan", "https://kumparan.com/hajfi-maricar/karhutla-2026-jutaan-warga-terdampak-asap-ratusan-ribu-terserang-ispa-28Rdqw8Z6Md"],["10,67 juta warga terdampak asap karhutla 2026.", "Kemenkes via Kumparan", "https://kumparan.com/hajfi-maricar/karhutla-2026-jutaan-warga-terdampak-asap-ratusan-ribu-terserang-ispa-28Rdqw8Z6Md"],["Asap sampai KLIA. Penerbangan Kuala Lumpur–Singapura dibatalkan.", "CNBC Indonesia", "https://www.cnbcindonesia.com/news/20261014165320-7-776222/asap-karhutla-ri-kepung-bandara-malaysia-sampai-batalkan-penerbangan"],"Sumber api telah diketahui: ~~Perusahaan Sawit~~ Oknum Warga."],
- [["20 korporasi ditetapkan tersangka karhutla per 29 Oktober 2026.", "Bareskrim via Garuda TV", "https://garuda.tv/perusahaan-asal-malaysia-singapura-dan-korsel-jadi-tersangka-karhutla/"],["245 orang ditetapkan tersangka dari 287 laporan polisi.", "Bareskrim via Garuda TV", "https://garuda.tv/perusahaan-asal-malaysia-singapura-dan-korsel-jadi-tersangka-karhutla/"],["Per 21 Oktober: 2.775 penerbangan terdampak asap.", "Kemenhub via Citra Sumsel", "https://www.citrasumsel.com/nasional/603149620/kabut-asap-karhutla-ganggu-penerbangan-40-jadwal-pesawat-batal-hingga-25-oktober-2026"],"Situasi terkendali.","Direksi SJP sedang berobat ke Singapura.","Situasi terkendali."],
+ [["202 ribu hektare lahan terbakar sepanjang 2026.", "SiPongi Kemenhut via GoodStats", "https://data.goodstats.id/statistic/kalimantan-barat-jadi-provinsi-dengan-karhutla-terluas-capai-38-ribu-ha-7ocLY"],["Januari–Juli 2026: luas karhutla naik 69% dibanding periode yang sama 2025.", "SiPongi Kemenhut via Kompas.com", "https://lestari.kompas.com/read/2026/10/03/093745086/luas-karhutla-2026-melonjak-perbaikan-tata-kelola-lahan-dan-gambut-jadi"],"PT Sawit Juga Pohon raih penghargaan Perusahaan Peduli Lingkungan.",["Juli 2026: hampir 95 ribu hektare terbakar hanya dalam satu bulan.", "Katadata", "https://green.katadata.co.id/berita/6a951ce53f3c8/karhutla-2026-meluas-pakar-soroti-lemahnya-upaya-pencegahan"],"Sawit juga pohon, mari hijaukan Indonesia!"],
+ [["Kalimantan Barat jadi provinsi dengan lahan terbakar terluas 2026: 38 ribu hektare.", "SiPongi Kemenhut via GoodStats", "https://data.goodstats.id/statistic/kalimantan-barat-jadi-provinsi-dengan-karhutla-terluas-capai-38-ribu-ha-7ocLY"],["Papua Selatan menyusul: 25,8 ribu hektare terbakar tahun ini.", "SiPongi Kemenhut via GoodStats", "https://data.goodstats.id/statistic/kalimantan-barat-jadi-provinsi-dengan-karhutla-terluas-capai-38-ribu-ha-7ocLY"],["21 Agustus 2026: 1.842 titik panas terpantau di Kalimantan dalam satu kali pantauan satelit.", "BNPB via NU Online", "https://www.nu.or.id/nasional/1-842-titik-panas-terpantau-di-kalimantan-ancaman-karhutla-belum-reda-vRQEG"],"Titik api berada di luar area konsesi kami.","Perut butuh nasi, bukan udara bersih. Jangan malas."],
+ [["Pontianak hentikan sekolah tatap muka TK–SMP akibat asap.", "Catrawarta", "https://www.catrawarta.com/warta/kabut-asap-karhutla-masih-mengancam-kalimantan-sekolah-diliburkan-hingga-kasus-ispa-melonjak-di-kaltim-dan-kalbar/"],["Kalimantan Timur meliburkan sekolah tatap muka akibat asap (23 September 2026).", "Catrawarta", "https://www.catrawarta.com/warta/kabut-asap-karhutla-masih-mengancam-kalimantan-sekolah-diliburkan-hingga-kasus-ispa-melonjak-di-kaltim-dan-kalbar/"],["Kerugian karhutla 2026 diperkirakan bisa tembus Rp123 triliun.", "CELIOS via Betahita", "https://www.betahita.id/berita/12317/kerugian-akibat-karhutla-2026-bisa-tembus-rp123-t"],"Rapat koordinasi penanganan karhutla dijadwalkan saat situasi sudah kondusif."],
+ [["288.540 kasus ISPA di 63 kabupaten/kota per 14 Oktober 2026.", "Kemenkes via Kumparan", "https://kumparan.com/hajfi-maricar/karhutla-2026-jutaan-warga-terdampak-asap-ratusan-ribu-terserang-ispa-28Rdqw8Z6Md"],["64.913 di antaranya balita.", "Kemenkes via Kumparan", "https://kumparan.com/hajfi-maricar/karhutla-2026-jutaan-warga-terdampak-asap-ratusan-ribu-terserang-ispa-28Rdqw8Z6Md"],["10,67 juta warga terdampak asap karhutla per 27 Agustus 2026.", "Kemenkes via Kumparan", "https://kumparan.com/hajfi-maricar/karhutla-2026-jutaan-warga-terdampak-asap-ratusan-ribu-terserang-ispa-28Rdqw8Z6Md"],["Asap menyelimuti bandara KLIA. Penerbangan Kuala Lumpur–Singapura ditangguhkan.", "CNBC Indonesia", "https://www.cnbcindonesia.com/news/20261014165320-7-776222/asap-karhutla-ri-kepung-bandara-malaysia-sampai-batalkan-penerbangan"],"Sumber api telah diketahui: ~~Perusahaan Sawit~~ Oknum Warga."],
+ [["20 korporasi ditetapkan tersangka karhutla per 29 Oktober 2026.", "Bareskrim via Garuda TV", "https://garuda.tv/perusahaan-asal-malaysia-singapura-dan-korsel-jadi-tersangka-karhutla/"],["245 orang ditetapkan tersangka dari 287 laporan polisi.", "Bareskrim via Garuda TV", "https://garuda.tv/perusahaan-asal-malaysia-singapura-dan-korsel-jadi-tersangka-karhutla/"],["Per 21 Oktober: 2.775 penerbangan domestik terdampak asap.", "Kemenhub via Citra Sumsel", "https://www.citrasumsel.com/nasional/603149620/kabut-asap-karhutla-ganggu-penerbangan-40-jadwal-pesawat-batal-hingga-25-oktober-2026"],"Situasi terkendali.","Direksi SJP sedang berobat ke Singapura.","Situasi terkendali."],
 ];
-const TICK_WHO=[["SiPongi KLHK", "SiPongi KLHK", "Juru bicara SJP", "Katadata", "Juru bicara SJP"], ["SiPongi KLHK", "SiPongi KLHK", "Sipongi Kemenhut", "Juru bicara SJP", "Pemerintah"], ["Pemkot Pontianak", "Pemprov Kaltim", "Siaran berita", "Pemerintah"], ["Kemenkes", "Kemenkes", "Kemenkes", "Diplomasi", "Juru bicara SJP"], ["Bareskrim", "Bareskrim", "Kemenhub", "Pemerintah", "Juru bicara SJP", "Pemerintah"]];
+const TICK_WHO=[["SiPongi Kemenhut", "SiPongi Kemenhut", "Juru bicara SJP", "Katadata", "Juru bicara SJP"], ["SiPongi Kemenhut", "SiPongi Kemenhut", "BNPB", "Juru bicara SJP", "Pemerintah"], ["Pemkot Pontianak", "Pemprov Kaltim", "Siaran berita", "Pemerintah"], ["Kemenkes", "Kemenkes", "Kemenkes", "Diplomasi", "Juru bicara SJP"], ["Bareskrim", "Bareskrim", "Kemenhub", "Pemerintah", "Juru bicara SJP", "Pemerintah"]];
 const AIR_LINES=[
  ["BPBD", "Bantuan air bersih: 1 jeriken per KK. Antre di kantor desa."],
  ["Juru bicara SJP", "Kanal SJP berfungsi optimal. Gambut kering, siap tanam."],
@@ -227,14 +241,14 @@ const CAUSE={
  api:"Api menyusulmu",
 };
 const FACTS=[
- ["Sepanjang Januari–Agustus 2026, 202.010 hektare lahan terbakar di Indonesia, naik 69% dari periode yang sama tahun sebelumnya.", "SiPongi KLHK via Tempo", "https://www.tempo.co/lingkungan/hektare-terbakar-karhutla-2026-2283887"],
+ ["Sepanjang 2026, 202.010 hektare lahan terbakar di Indonesia. Hingga Juli saja, luasnya naik 69% dari periode yang sama 2025.", "SiPongi Kemenhut via Kompas.com", "https://lestari.kompas.com/read/2026/10/03/093745086/luas-karhutla-2026-melonjak-perbaikan-tata-kelola-lahan-dan-gambut-jadi"],
  ["Hingga 14 Oktober 2026 tercatat 288.540 kasus ISPA di 63 kabupaten/kota, termasuk 64.913 balita.", "Kemenkes via Kumparan", "https://kumparan.com/hajfi-maricar/karhutla-2026-jutaan-warga-terdampak-asap-ratusan-ribu-terserang-ispa-28Rdqw8Z6Md"],
- ["Sekitar 10,67 juta warga terdampak asap karhutla 2026.", "Kemenkes via Kumparan", "https://kumparan.com/hajfi-maricar/karhutla-2026-jutaan-warga-terdampak-asap-ratusan-ribu-terserang-ispa-28Rdqw8Z6Md"],
- ["Kerugian akibat karhutla 2026 diperkirakan bisa mencapai Rp123,1 triliun.", "Betahita", "https://www.betahita.id/berita/12317/kerugian-akibat-karhutla-2026-bisa-tembus-rp123-t"],
- ["Per 21 Oktober 2026, 2.775 penerbangan terdampak asap karhutla. Asapnya juga membatalkan penerbangan di Malaysia.", "Kemenhub via Citra Sumsel", "https://www.citrasumsel.com/nasional/603149620/kabut-asap-karhutla-ganggu-penerbangan-40-jadwal-pesawat-batal-hingga-25-oktober-2026"],
- ["Per 29 Oktober 2026, Bareskrim menetapkan 20 korporasi dan 245 orang sebagai tersangka karhutla.", "Bareskrim via Garuda TV", "https://garuda.tv/perusahaan-asal-malaysia-singapura-dan-korsel-jadi-tersangka-karhutla/"],
- ["Kalimantan Barat jadi provinsi dengan lahan terbakar terluas pada 2026: 38.310 hektare.", "SiPongi KLHK via Tempo", "https://www.tempo.co/lingkungan/hektare-terbakar-karhutla-2026-2283887"],
- ["Sebagai pembanding: karhutla 2015 menghanguskan sekitar 2,6 juta hektare.", "Bank Dunia, 2015", "https://www.worldbank.org/en/news/feature/2015/12/01/indonesias-fire-and-haze-crisis"],
+ ["Per 27 Agustus 2026, sekitar 10,67 juta warga terdampak asap karhutla.", "Kemenkes via Kumparan", "https://kumparan.com/hajfi-maricar/karhutla-2026-jutaan-warga-terdampak-asap-ratusan-ribu-terserang-ispa-28Rdqw8Z6Md"],
+ ["Kerugian akibat karhutla Januari–Agustus 2026 diperkirakan bisa mencapai Rp123,1 triliun.", "CELIOS via Betahita", "https://www.betahita.id/berita/12317/kerugian-akibat-karhutla-2026-bisa-tembus-rp123-t"],
+ ["Per 21 Oktober 2026, 2.775 penerbangan domestik terdampak asap karhutla sejak 11 Agustus.", "Kemenhub via Citra Sumsel", "https://www.citrasumsel.com/nasional/603149620/kabut-asap-karhutla-ganggu-penerbangan-40-jadwal-pesawat-batal-hingga-25-oktober-2026"],
+ ["Hingga akhir Oktober 2026, Bareskrim menetapkan 20 korporasi dan 245 orang sebagai tersangka karhutla.", "Bareskrim via Garuda TV", "https://garuda.tv/perusahaan-asal-malaysia-singapura-dan-korsel-jadi-tersangka-karhutla/"],
+ ["Kalimantan Barat jadi provinsi dengan lahan terbakar terluas pada 2026: 38.310 hektare.", "SiPongi Kemenhut via GoodStats", "https://data.goodstats.id/statistic/kalimantan-barat-jadi-provinsi-dengan-karhutla-terluas-capai-38-ribu-ha-7ocLY"],
+ ["Sebagai pembanding: karhutla 2015 menghanguskan sekitar 2,6 juta hektare.", "Bank Dunia via BenarNews", "https://www.benarnews.org/english/news/indonesian/indonesia-fires-12152015170230.html"],
 ];
 
 // ================= Audio (Web Audio, tanpa file) =================
@@ -360,7 +374,17 @@ function start(){aInit();aMaster(.9,.05);reset();mode='play';
 }
 function pause(){mode='paused';$('pause').classList.remove('hide');if(AU.ac)AU.ac.suspend();}
 function resume(){mode='play';$('pause').classList.add('hide');if(AU.ac)AU.ac.resume();last=performance.now();}
-$('btnStart').onclick=start;$('btnAgain').onclick=start;$('btnResume').onclick=resume;
+$('btnStart').onclick=start;$('btnAgain').onclick=start;
+// Bagikan hasil: di HP pakai menu bagikan bawaan, di desktop buka X dengan teks terisi
+const CAUSE_SHORT={ispa:'meninggal karena ISPA',bulldozer:'tertabrak bulldozer PT SJP',ekskavator:'terlindas ekskavator PT SJP',gambut:'terperosok ke gambut terbakar',baliho:'menabrak spanduk zero burning',api:'disusul api'};
+$('btnShare').onclick=()=>{const url=location.origin+location.pathname,
+  text=`Aku bertahan ${Math.floor(S.dist)} m sebelum ${CAUSE_SHORT[S.cause]||'tumbang'}.
+Tersangka dari PT SJP: 0.
+Tersangka “oknum warga”: 1.
+
+#DikejarAsap`;
+ if(navigator.share&&matchMedia('(pointer:coarse)').matches)navigator.share({text,url}).catch(()=>{});
+ else window.open('https://x.com/intent/post?text='+encodeURIComponent(text)+'&url='+encodeURIComponent(url),'_blank','noopener');};$('btnResume').onclick=resume;
 
 function stumble(){
  if(S.t-S.lastStumble<6){die('api');return;}

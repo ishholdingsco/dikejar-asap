@@ -150,13 +150,14 @@ Cara memberi masukan: tandai ID dengan ✅ pakai / ❌ buang / ✏️ ubah, atau
 
 ## Fakta untuk layar game over (G4)
 
-> Data karhutla 2026, dari laporan media (dicek November 2026). Angka antarsumber dan antartanggal bisa berbeda, jadi **cek ulang ke SiPongi, Kemenkes, Kemenhub, dan Bareskrim sebelum rilis.**
+> Dicek ulang 8 November 2026 terhadap artikel sumber. Angka antarsumber dan antartanggal bisa berbeda; sebutkan periode/tanggal bersama angkanya.
 
-1. Januari–Agustus 2026: 202.010 ha terbakar, naik 69% dari periode yang sama tahun sebelumnya. (SiPongi KLHK)
-2. 288.540 kasus ISPA di 63 kab/kota per 14 Okt 2026, termasuk 64.913 balita. (Kemenkes)
-3. 10,67 juta warga terdampak asap. (Kemenkes)
-4. Kerugian karhutla 2026 diperkirakan bisa mencapai Rp123,1 triliun. (Betahita)
-5. 2.775 penerbangan terdampak per 21 Okt 2026, termasuk pembatalan di Malaysia. (Kemenhub)
-6. 20 korporasi dan 245 orang ditetapkan tersangka per 29 Okt 2026. (Bareskrim)
-7. Kalimantan Barat jadi provinsi dengan lahan terbakar terluas: 38.310 ha. (SiPongi KLHK)
-8. Pembanding: karhutla 2015 menghanguskan sekitar 2,6 juta ha. (Bank Dunia, 2016)
+1. Sepanjang 2026, 202.010 ha terbakar (SiPongi Kemenhut via GoodStats, 8 Sep 2026). Januari–Juli 2026 naik 69% dari periode sama 2025 (SiPongi via Kompas.com, 3 Okt 2026).
+2. 288.540 kasus ISPA di 63 kab/kota per 14 Okt 2026, termasuk 64.913 balita. (Kemenkes via Kumparan)
+3. 10,67 juta warga terdampak asap per 27 Agustus 2026. (Kemenkes via Kumparan)
+4. Kerugian Januari–Agustus 2026 diperkirakan Rp123,1 triliun. (CELIOS via Betahita, 4 Sep 2026)
+5. 2.775 penerbangan domestik terdampak sejak 11 Agustus, per 21 Okt 2026. (Kemenhub via Citra Sumsel) — sumber ini tidak menyebut Malaysia.
+6. Hingga akhir Oktober 2026: 20 korporasi (diumumkan 29 Okt) dan 245 orang tersangka. (Bareskrim via Garuda TV)
+7. Kalimantan Barat terluas: 38.310 ha; Papua Selatan 25.838 ha. (SiPongi via GoodStats)
+8. Pembanding: karhutla 2015 menghanguskan sekitar 2,6 juta ha. (Bank Dunia via BenarNews, 15 Des 2015)
+9. Ticker: 21 Agu 2026, 1.842 titik panas di Kalimantan (BNPB via NU Online). Juli 2026 hampir 95 ribu ha dalam sebulan (Katadata). KLIA berasap, rute KL–Singapura (Firefly) ditangguhkan (CNBC Indonesia/Reuters).
