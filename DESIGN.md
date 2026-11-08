@@ -161,3 +161,4 @@ Cara memberi masukan: tandai ID dengan ✅ pakai / ❌ buang / ✏️ ubah, atau
 6. Hingga akhir Oktober 2026: 20 korporasi (diumumkan 29 Okt) dan 245 orang tersangka. (Bareskrim via Garuda TV)
 7. Kalimantan Barat terluas: 38.310 ha; Papua Selatan 25.838 ha. (SiPongi via GoodStats)
 8. Ticker: 21 Agu 2026, 1.842 titik panas di Kalimantan (BNPB via NU Online). Juli 2026 hampir 95 ribu ha dalam sebulan (Katadata). KLIA berasap, rute KL–Singapura (Firefly) ditangguhkan (CNBC Indonesia/Reuters).
+9. Ticker (cek 8 Nov 2026): 46 armada udara di 12 provinsi, 5 Nov (BNPB via Kompas.com); ISPU Balikpapan 535, 2 Nov (BNPB via Disway); titik panas Papua Selatan +66% (BNPB via Kompas.com); per 7 Nov 2.733 titik panas, ~1.430 ha masih terbakar (BNPB via Harian Jogja).
