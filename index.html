@@ -243,7 +243,7 @@ const CAUSE={
  ispa:"Kamu meninggal karena ISPA",
  bulldozer:"Kamu tertabrak bulldozer SJP<small>Perusahaan melaporkan sedikit insiden dengan “batang pohon”.</small>",
  excavator:"Kamu terlindas excavator SJP<small>“Batang pohon” berhasil dirubuhkan untuk pembukaan lahan sawit.</small>",
- truk:"Kamu terlindas truk sawit SJP<small>“Batang pohon” hancur terlindas <s>truk</s> sistem.</small>",
+ truk:"Kamu hancur dilindas <s>truk</s> sistem",
  gambut:"Kamu terperosok ke gambut yang terbakar<small>Tidak ada apa-apa di sini, hanya orang<s>utan</s> terbakar.</small>",
  baliho:"Kamu menabrak spanduk zero burning<small>Zero burning. Zero victim.</small>",
  api:"Api menyusulmu",
@@ -400,7 +400,7 @@ $('btnStart').onclick=start;
 // browser baru mengizinkan suara setelah ada sentuhan: ketuk di mana saja pada layar awal untuk mendengar suasana bara
 $('start').addEventListener('pointerdown',e=>{$('sndHint').classList.add('off');if(e.target.closest('button'))return;aInit();aMaster(.8,1);});$('btnAgain').onclick=start;
 // Bagikan hasil: di HP pakai menu bagikan bawaan, di desktop buka X dengan teks terisi
-const CAUSE_SHORT={ispa:'meninggal karena ISPA',bulldozer:'tertabrak bulldozer PT SJP',excavator:'terlindas excavator PT SJP',truk:'terlindas truk sawit PT SJP',lubang:'terperosok lubang jalan lalu disusul api',gambut:'terperosok ke gambut terbakar',baliho:'menabrak spanduk zero burning',api:'disusul api'};
+const CAUSE_SHORT={ispa:'meninggal karena ISPA',bulldozer:'tertabrak bulldozer PT SJP',excavator:'terlindas excavator PT SJP',truk:'hancur dilindas truk, eh, sistem',lubang:'terperosok lubang jalan lalu disusul api',gambut:'terperosok ke gambut terbakar',baliho:'menabrak spanduk zero burning',api:'disusul api'};
 $('btnShare').onclick=()=>{const url=location.origin+location.pathname,
   text=`Aku bertahan ${Math.floor(S.dist)} m sebelum ${CAUSE_SHORT[S.cause]||'tumbang'}.
 Tersangka dari PT SJP: 0.
