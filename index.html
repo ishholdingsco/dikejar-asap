@@ -74,6 +74,9 @@ canvas{display:block;width:100%;height:100%}
 #start .a{font:100 40px/1 var(--f-num);letter-spacing:.42em;padding-left:.42em}
 #start .b{font:800 86px/.86 var(--f-num);letter-spacing:.03em}
 #start .go{position:absolute;bottom:calc(env(safe-area-inset-bottom) + 64px);left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:16px;color:var(--pale)}
+#sndHint{position:absolute;top:calc(env(safe-area-inset-top) + 16px);right:16px;font:600 9px/1 var(--f-lab);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);opacity:.7;animation:sndBlink 2.4s ease-in-out infinite;transition:opacity .6s;pointer-events:none}
+#sndHint.off{opacity:0;animation:none}
+@keyframes sndBlink{50%{opacity:.3}}
 #start .help{font:400 11px/1.7 var(--f-lab);letter-spacing:.06em;opacity:.75}
 #start .help kbd{font:600 10px/1 var(--f-lab);border:1px solid currentColor;padding:1px 5px;border-radius:2px}
 #start .corp{position:absolute;bottom:calc(env(safe-area-inset-bottom) + 22px);left:0;right:0;font:italic 400 11px/1 var(--f-sub);color:var(--pale);opacity:.5}
@@ -130,6 +133,7 @@ canvas{display:block;width:100%;height:100%}
  <div id="start" class="ov">
   <div class="a">DIKEJAR</div>
   <div class="b">ASAP</div>
+  <div id="sndHint">🔊 ketuk layar untuk suara</div>
   <div class="go">
    <button class="btn" id="btnStart">Mulai lari</button>
    <div class="help">Geser ← → pindah jalur · ↑ lompat · ↓ meluncur<br><kbd>A</kbd> <kbd>D</kbd> jalur · <kbd>W</kbd> lompat · <kbd>S</kbd> meluncur · gunakan headphone</div>
@@ -387,7 +391,7 @@ function pause(){mode='paused';$('pause').classList.remove('hide');if(AU.ac)AU.a
 function resume(){mode='play';$('pause').classList.add('hide');if(AU.ac)AU.ac.resume();last=performance.now();}
 $('btnStart').onclick=start;
 // browser baru mengizinkan suara setelah ada sentuhan: ketuk di mana saja pada layar awal untuk mendengar suasana bara
-$('start').addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;aInit();aMaster(.8,1);});$('btnAgain').onclick=start;
+$('start').addEventListener('pointerdown',e=>{$('sndHint').classList.add('off');if(e.target.closest('button'))return;aInit();aMaster(.8,1);});$('btnAgain').onclick=start;
 // Bagikan hasil: di HP pakai menu bagikan bawaan, di desktop buka X dengan teks terisi
 const CAUSE_SHORT={ispa:'meninggal karena ISPA',bulldozer:'tertabrak bulldozer PT SJP',excavator:'terlindas excavator PT SJP',truk:'terlindas truk sawit PT SJP',gambut:'terperosok ke gambut terbakar',baliho:'menabrak spanduk zero burning',api:'disusul api'};
 $('btnShare').onclick=()=>{const url=location.origin+location.pathname,
