@@ -152,7 +152,7 @@ canvas{display:block;width:100%;height:100%}
   <div class="o-stats">
    <div><b id="sDist">0</b><span>meter</span></div>
    <div><b id="sAir">0</b><span>liter air</span></div>
-   <div><b id="sYear">1</b><span>kemarau</span></div>
+   <div><b id="sMask">0</b><span>masker</span></div>
    <div><b id="sIspu">0</b><span>ISPU</span></div>
   </div>
   <div class="o-case">
@@ -311,7 +311,7 @@ function aMaster(v,t=.6){if(AU.ac)AU.m.gain.setTargetAtTime(v,AU.ac.currentTime,
 let S,mode='menu';
 function reset(){
  S={t:0,dist:0,speed:13,lane:0,px:0,py:0,vy:0,slide:0,ispu:20,air:0,objs:[],decor:[],spawnAt:42,
-  fire:0,lastStumble:-99,shake:0,rain:0,nextRain:rand(70,85),year:2026,years:1,tier:0,hot:12,
+  fire:0,lastStumble:-99,shake:0,rain:0,nextRain:rand(70,85),year:2026,years:1,mask:0,tier:0,hot:12,
   nextToast:rand(12,18),nextTick:rand(5,8),ash:[],ghost:null,ghostT:6,plane:null,pulse:0,dieT:0,cause:null,ph:0,land:0,coughT:0,lookT:0,nextLook:rand(5,8)};
  for(const side of[-1,1])for(const[row,gap]of[[0,[2.2,3.6]],[1,[1.8,3]],[2,[1.6,2.6]]])for(let wz=1+row*.9;wz<92;wz+=rand(gap[0],gap[1]))S.decor.push(newDecor(side,wz,row));
 }
@@ -404,7 +404,7 @@ function die(cause){
 function showOver(){
  mode='over';$('hud').classList.add('hide');
  const d=Math.floor(S.dist);$('cause').innerHTML=CAUSE[S.cause];
- $('sDist').textContent=d;$('oYear').textContent='Kemarau '+S.year;$('sAir').textContent=S.air;$('sYear').textContent=S.years;$('sIspu').textContent=Math.round(S.ispu);
+ $('sDist').textContent=d;$('oYear').textContent='Kemarau '+S.year;$('sAir').textContent=S.air;$('sMask').textContent=S.mask;$('sIspu').textContent=Math.round(S.ispu);
  const f=pick(FACTS);$('fact').innerHTML=`${f[0]}<small>Sumber: <a href="${f[2]}" target="_blank" rel="noopener">${f[1]} ↗</a></small>`;
  let best=+(lsGet('dikejarSawitBest')||0);
  if(d>best){best=d;lsSet('dikejarSawitBest',d);$('best').textContent='Rekor baru: '+d+' m. Tidak ada yang merayakan.';}
@@ -449,7 +449,7 @@ function update(dt){
   if(o.type==='air'||o.type==='masker'){
    if(!o.taken&&inLane&&Math.abs(z)<.7&&S.py<1.4){o.taken=true;
     if(o.type==='air'){S.air++;S.ispu=Math.max(15,S.ispu-2);tone(880+(S.air%5)*60,.12,.06);if(S.air%10===0){const l=AIR_LINES[(S.air/10-1)%AIR_LINES.length];say(l[0],l[1]);}}
-    else{S.ispu=Math.max(15,S.ispu-35);tone(660,.3,.1,'triangle',0,990);say('Bantuan','Masker bantuan diterima: 1 lembar untuk 1 keluarga. Tidak menyaring PM2.5.');}}
+    else{S.mask++;S.ispu=Math.max(15,S.ispu-35);tone(660,.3,.1,'triangle',0,990);say('Bantuan','Masker bantuan diterima: 1 lembar untuk 1 keluarga. Tidak menyaring PM2.5.');}}
    continue;}
   if(o.hit||!inLane||!(z<.35&&z+o.len>-.35))continue;
   if(o.type==='kayu'&&S.py<.5){o.hit=true;stumble();}
