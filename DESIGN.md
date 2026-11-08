@@ -167,3 +167,7 @@ Cara memberi masukan: tandai ID dengan ✅ pakai / ❌ buang / ✏️ ubah, atau
 
 ## Aset audio
 - `audio/api.mp3`: potongan 20 detik (loop) dari "Campfire 01" oleh HECKFRICKER, Freesound #729395, lisensi CC0. Dinormalisasi, mono, 80 kbps.
+- `audio/intro.mp3`: 3,8 detik intro = gemuruh api "Fire - Crackling, Spitting, Roaring" (jamesdrake89, Freesound #636178, CC0) + whoosh dari "Swooshes, Swishes and Whooshes" (timothyd4y, Freesound #586110, CC0).
+
+## Intro sinematik
+- Hanya saat pertama menekan Mulai lari (bukan Lari lagi). 3,6 detik: kamera mulai tinggi di belakang petani, kartu "KEMARAU 2026 · Kalimantan", dinding api naik, lalu kamera menukik ke posisi main. Ketuk/geser untuk mempercepat.
