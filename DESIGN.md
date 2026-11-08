@@ -160,5 +160,4 @@ Cara memberi masukan: tandai ID dengan ✅ pakai / ❌ buang / ✏️ ubah, atau
 5. 2.775 penerbangan domestik terdampak sejak 11 Agustus, per 21 Okt 2026. (Kemenhub via Citra Sumsel) — sumber ini tidak menyebut Malaysia.
 6. Hingga akhir Oktober 2026: 20 korporasi (diumumkan 29 Okt) dan 245 orang tersangka. (Bareskrim via Garuda TV)
 7. Kalimantan Barat terluas: 38.310 ha; Papua Selatan 25.838 ha. (SiPongi via GoodStats)
-8. Pembanding: karhutla 2015 menghanguskan sekitar 2,6 juta ha. (Bank Dunia via BenarNews, 15 Des 2015)
-9. Ticker: 21 Agu 2026, 1.842 titik panas di Kalimantan (BNPB via NU Online). Juli 2026 hampir 95 ribu ha dalam sebulan (Katadata). KLIA berasap, rute KL–Singapura (Firefly) ditangguhkan (CNBC Indonesia/Reuters).
+8. Ticker: 21 Agu 2026, 1.842 titik panas di Kalimantan (BNPB via NU Online). Juli 2026 hampir 95 ribu ha dalam sebulan (Katadata). KLIA berasap, rute KL–Singapura (Firefly) ditangguhkan (CNBC Indonesia/Reuters).
