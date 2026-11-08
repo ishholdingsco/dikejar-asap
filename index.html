@@ -915,14 +915,13 @@ function drawLubang(o,z){const fv=fogVis(z);if(fv<=0||z<-2.4)return;
  const soil=(c,k)=>rgb(mixc(mixc(base,c,k),HZ,.08));
  ctx.globalAlpha=fv;
  ctx.globalAlpha=fv*.55;ctx.fillStyle=soil([200,156,118],.3);ring(1.14,1.16,0,0,0);ctx.fill();ctx.globalAlpha=fv;                       // bibir tanah gembur yang terangkat
- ctx.fillStyle=soil(wet?[96,70,50]:[132,92,64],.55);ring(1,1,0,0,0);ctx.fill();                 // dinding seberang (terkena cahaya)
- ctx.fillStyle=soil(wet?[62,46,34]:[84,56,38],.7);ring(.8,.62,0,-.12,-.18);ctx.fill();          // dasar lubang, sedikit lebih rendah & ke depan
- ctx.save();ring(1,1,0,0,0);ctx.clip();                                                        // bayangan sisi dekat (bibir depan menutupi dasar)
- const sh=P(cx,0,cz-D*.95),sh2=P(cx,0,cz-D*.15),g=ctx.createLinearGradient(0,sh.y,0,sh2.y);g.addColorStop(0,'rgba(30,18,12,.55)');g.addColorStop(1,'rgba(30,18,12,0)');
- ctx.fillStyle=g;ctx.fillRect(sh.x-R*sh.s*1.3,Math.min(sh.y,sh2.y)-2,R*sh.s*2.6,Math.abs(sh2.y-sh.y)+4);ctx.restore();
+ // satu bentuk lubang: gradasi dari dinding seberang yang terang ke sisi dekat yang gelap (kesan dalam tanpa bentuk kedua)
+ {const far=P(cx,0,cz+D),near=P(cx,0,cz-D),gr=ctx.createLinearGradient(0,far.y,0,near.y);
+  gr.addColorStop(0,soil(wet?[104,78,56]:[150,108,76],.55));gr.addColorStop(.45,soil(wet?[70,52,38]:[98,66,46],.65));gr.addColorStop(1,soil(wet?[46,34,26]:[58,38,26],.7));
+  ctx.fillStyle=gr;ring(1,1,0,0,0);ctx.fill();}
  ctx.strokeStyle=rgb(mixc([60,38,26],base,.2),.7);ctx.lineWidth=Math.max(.8,.02*P(cx,0,cz).s);ctx.beginPath();shape.forEach(([u,v],k)=>{if(v>.05)return;const p=P(cx+u*R,0,cz+v*D);ctx.lineTo(p.x,p.y);});ctx.stroke();
- if(wet){ctx.fillStyle=rgb(mixc([150,128,104],HZ,.3),.55);ring(.55,.4,-.08,-.12,-.1);ctx.fill();} // genangan berkilap
- else{ctx.fillStyle=soil([176,140,110],.5);for(let k=0;k<9;k++){const a=o.seed*20+k*2.1,r=.25+.5*Math.abs(Math.sin(k*1.7+o.seed*9)),p=P(cx+Math.cos(a)*R*.7*r,-.08,cz-.1+Math.sin(a)*D*.6*r);
+ if(wet){ctx.fillStyle=rgb(mixc([150,128,104],HZ,.3),.55);ring(.55,.45,-.08,-.1,0);ctx.fill();} // genangan berkilap
+ else{ctx.fillStyle=soil([176,140,110],.5);for(let k=0;k<9;k++){const a=o.seed*20+k*2.1,r=.25+.5*Math.abs(Math.sin(k*1.7+o.seed*9)),p=P(cx+Math.cos(a)*R*.7*r,0,cz+Math.sin(a)*D*.6*r);
   const w=Math.max(.8,.035*p.s);ctx.beginPath();ctx.ellipse(p.x,p.y,w,w*.6,0,0,7);ctx.fill();}}                  // kerikil di dasar
  ctx.fillStyle=soil([200,160,124],.45);for(let k=0;k<7;k++){const a=o.seed*13+k*.9,p=P(cx+Math.cos(a)*R*1.3,0,cz+Math.sin(a)*D*1.3);ctx.fillRect(p.x,p.y,Math.max(1,.03*p.s),Math.max(1,.018*p.s));} // remah di sekeliling
  ctx.globalAlpha=1;}
