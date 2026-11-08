@@ -318,7 +318,7 @@ function aUpdate(dt,playing){
  if(Math.random()<dt*(3+heat*22))burst('highpass',rand(1800,4000),.7,rand(.02,.05),rand(.03,.12)*(.4+heat),rand(-.8,.8));
  // napas terengah ringan: hembus-tarik bergantian mengikuti langkah, makin berat saat ISPU naik
  if(mode==='play'&&S.py<=0.01){AU.pant=(AU.pant||0)-dt;if(AU.pant<=0){AU.pantIn=!AU.pantIn;AU.pant=(AU.pantIn?.26:.34)*(1-f*.3);
-  if(AU.pantIn)burst('bandpass',rand(1250,1500),1.4,.15,.022+f*.035);else burst('bandpass',rand(650,820),1.1,.24,.035+f*.05);}}
+  if(AU.pantIn)burst('bandpass',rand(1250,1500),1.4,.15,(.022+f*.035)*1.4);else burst('bandpass',rand(650,820),1.1,.24,(.035+f*.05)*1.4);}}
  if(f>.4&&Math.random()<dt*f*.7){cough(rand(-.2,.2),.06+f*.14);S.coughT=.7;}
  if(f>.25&&f<.65&&Math.random()<dt*.12)chirp();
  if(S.ispu>=300){AU.beat-=dt;if(AU.beat<=0){heartbeat();S.pulse=1;AU.beat=60/(70+(f-.6)*110);}}
