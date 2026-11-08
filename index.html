@@ -897,17 +897,26 @@ function drawBanner(o,z){const x=o.lane*LW,g=proj(x,0,z),t=proj(x,1.95,z),bt=pro
   ctx.fillText('ZERO',g.x,t.y+bh*.3);ctx.fillText('BURNING ✓',g.x,t.y+bh*.68);}
  ctx.globalAlpha=1;}
 // lubang jalan tanah: kering = rongga gelap bertepi retak; saat hujan = kubangan lumpur berkilap
-function drawLubang(o,z){const x=o.lane*LW+(o.seed-.5)*.2,n=proj(x,0,Math.max(z,.05)),f=proj(x,0,z+1.7),fv=fogVis(z);if(fv<=0||n.s<=0)return;
- // lubang jalan: tepi bergerigi tak beraturan (bukan elips), dinding sisi jauh terang, dasar gelap, remah tanah di sekeliling
- const cx=(n.x+f.x)/2,cy=(n.y+f.y)/2,sc=(n.s+f.s)/2,rx=LW*.44*sc,ry=Math.max(2,(n.y-f.y)/2),wet=S.rain>0,base=dcol(z),N=14;
- const pts=[];for(let k=0;k<N;k++){const a=k/N*Math.PI*2,j=.72+.28*Math.abs(Math.sin(o.seed*41+k*2.37))+(k%3===0?.12:0);pts.push([cx+Math.cos(a)*rx*j,cy+Math.sin(a)*ry*j]);}
- const poly=(sx,sy,dy)=>{ctx.beginPath();pts.forEach(([px,py],k)=>{const X=cx+(px-cx)*sx,Y=cy+(py-cy)*sy+dy;k?ctx.lineTo(X,Y):ctx.moveTo(X,Y);});ctx.closePath();};
+// lubang jalan tanah: digambar di bidang tanah (tiap titik diproyeksikan sendiri) supaya tidak terlipat saat lewat kamera.
+// Warna tanah, bukan hitam: dinding seberang terkena cahaya, sisi dekat dalam bayangan, dasar cokelat tua berkerikil.
+function drawLubang(o,z){const fv=fogVis(z);if(fv<=0||z<-2.4)return;
+ const cx=o.lane*LW+(o.seed-.5)*.2,cz=z+.6,R=LW*.42,D=.55,N=16,wet=S.rain>0,base=dcol(Math.max(z,0));
+ const P=(x,y,zz)=>proj(x,y,Math.max(zz,-2.9));
+ const shape=[];for(let k=0;k<N;k++){const a=k/N*Math.PI*2,j=.74+.26*Math.abs(Math.sin(o.seed*41+k*2.37))+(k%4===0?.1:0);shape.push([Math.cos(a)*j,Math.sin(a)*j]);}
+ const ring=(sx,sz,dx,dz,dy)=>{ctx.beginPath();shape.forEach(([u,v],k)=>{const p=P(cx+u*R*sx+dx,dy,cz+v*D*sz+dz);k?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y);});ctx.closePath();};
+ const soil=(c,k)=>rgb(mixc(mixc(base,c,k),HZ,.08));
  ctx.globalAlpha=fv;
- ctx.fillStyle=rgb(mixc(mixc(base,[176,128,92],.35),HZ,.12));poly(1.14,1.2,0);ctx.fill();                       // bibir tanah remuk
- ctx.fillStyle=wet?rgb(mixc([70,50,36],HZ,.12)):rgb(mixc([96,64,44],base,.2));poly(1,1,0);ctx.fill();          // dinding lubang
- ctx.fillStyle=wet?rgb(mixc([52,38,28],HZ,.1)):rgb(mixc([34,22,15],base,.15));poly(.86,.78,ry*.2);ctx.fill();   // dasar gelap, bergeser ke depan
- if(wet){ctx.fillStyle=rgb(mixc([150,128,104],HZ,.35),.5);ctx.beginPath();ctx.ellipse(cx-rx*.18,cy+ry*.05,rx*.38,ry*.16,0,0,7);ctx.fill();}
- ctx.fillStyle=rgb(mixc([120,86,60],base,.3));for(let k=0;k<6;k++){const a=o.seed*20+k*1.9,r=1.2+.25*Math.sin(k*3.3);ctx.fillRect(cx+Math.cos(a)*rx*r,cy+Math.sin(a)*ry*r,Math.max(1,.025*sc),Math.max(1,.015*sc));}
+ ctx.globalAlpha=fv*.55;ctx.fillStyle=soil([200,156,118],.3);ring(1.14,1.16,0,0,0);ctx.fill();ctx.globalAlpha=fv;                       // bibir tanah gembur yang terangkat
+ ctx.fillStyle=soil(wet?[96,70,50]:[132,92,64],.55);ring(1,1,0,0,0);ctx.fill();                 // dinding seberang (terkena cahaya)
+ ctx.fillStyle=soil(wet?[62,46,34]:[84,56,38],.7);ring(.8,.62,0,-.12,-.18);ctx.fill();          // dasar lubang, sedikit lebih rendah & ke depan
+ ctx.save();ring(1,1,0,0,0);ctx.clip();                                                        // bayangan sisi dekat (bibir depan menutupi dasar)
+ const sh=P(cx,0,cz-D*.95),sh2=P(cx,0,cz-D*.15),g=ctx.createLinearGradient(0,sh.y,0,sh2.y);g.addColorStop(0,'rgba(30,18,12,.55)');g.addColorStop(1,'rgba(30,18,12,0)');
+ ctx.fillStyle=g;ctx.fillRect(sh.x-R*sh.s*1.3,Math.min(sh.y,sh2.y)-2,R*sh.s*2.6,Math.abs(sh2.y-sh.y)+4);ctx.restore();
+ ctx.strokeStyle=rgb(mixc([60,38,26],base,.2),.7);ctx.lineWidth=Math.max(.8,.02*P(cx,0,cz).s);ctx.beginPath();shape.forEach(([u,v],k)=>{if(v>.05)return;const p=P(cx+u*R,0,cz+v*D);ctx.lineTo(p.x,p.y);});ctx.stroke();
+ if(wet){ctx.fillStyle=rgb(mixc([150,128,104],HZ,.3),.55);ring(.55,.4,-.08,-.12,-.1);ctx.fill();} // genangan berkilap
+ else{ctx.fillStyle=soil([176,140,110],.5);for(let k=0;k<9;k++){const a=o.seed*20+k*2.1,r=.25+.5*Math.abs(Math.sin(k*1.7+o.seed*9)),p=P(cx+Math.cos(a)*R*.7*r,-.08,cz-.1+Math.sin(a)*D*.6*r);
+  const w=Math.max(.8,.035*p.s);ctx.beginPath();ctx.ellipse(p.x,p.y,w,w*.6,0,0,7);ctx.fill();}}                  // kerikil di dasar
+ ctx.fillStyle=soil([200,160,124],.45);for(let k=0;k<7;k++){const a=o.seed*13+k*.9,p=P(cx+Math.cos(a)*R*1.3,0,cz+Math.sin(a)*D*1.3);ctx.fillRect(p.x,p.y,Math.max(1,.03*p.s),Math.max(1,.018*p.s));} // remah di sekeliling
  ctx.globalAlpha=1;}
 function drawGambut(o,z){const x=o.lane*LW,hw=LW*.48,q=[proj(x-hw,0,z),proj(x+hw,0,z),proj(x+hw,0,z+o.len),proj(x-hw,0,z+o.len)],fv=fogVis(z);
  ctx.globalAlpha=fv;ctx.fillStyle='#0d0c0a';ctx.beginPath();ctx.moveTo(q[0].x,q[0].y);for(const p of q)ctx.lineTo(p.x,p.y);ctx.fill();
