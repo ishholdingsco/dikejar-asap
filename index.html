@@ -273,6 +273,9 @@ function aInit(){
  AU.drone=g(0);const lp=flt('lowpass',170);lp.connect(AU.drone).connect(m);
  [55,55.7,82.4].forEach(f=>{const o=ac.createOscillator();o.type='sawtooth';o.frequency.value=f;o.connect(lp);o.start();});
  AU.ph=0;AU.beat=0;AU.note=0;
+ // rekaman api asli (CC0, HECKFRICKER/Freesound #729395), diputar berulang; dengung sintetis tetap jadi lapisan bawah
+ AU.fireRec=g(0);{const k=ac.createDynamicsCompressor();k.threshold.value=-20;k.ratio.value=4;k.attack.value=.003;k.release.value=.2;AU.fireRec.connect(k).connect(m);}
+ fetch('audio/api.mp3').then(r=>r.arrayBuffer()).then(b=>ac.decodeAudioData(b)).then(buf=>{const s=ac.createBufferSource();s.buffer=buf;s.loop=true;s.loopStart=.03;s.loopEnd=buf.duration-.03;s.connect(AU.fireRec);s.start();}).catch(()=>{});
 }
 function out(node,pan){if(pan&&AU.ac.createStereoPanner){const p=AU.ac.createStereoPanner();p.pan.value=pan;node.connect(p).connect(AU.m);}else node.connect(AU.m);}
 function burst(type,f,q,dur,vol,pan=0,delay=0){
@@ -293,7 +296,8 @@ const chirp=()=>{const p=rand(-1,1),f=rand(2200,3400);for(let i=0;i<3;i++)tone(f
 const PENT=[220,247,277,330,370,440,494];
 function aUpdate(dt,playing){
  if(!AU.ac)return;const now=AU.ac.currentTime,f=S.ispu/500,heat=fireHeat();
- AU.fire.gain.setTargetAtTime(playing?.06+heat*.5:.04,now,.1);
+ AU.fire.gain.setTargetAtTime(playing?.015+heat*.1:.012,now,.1);
+ AU.fireRec.gain.setTargetAtTime(playing?.9+heat*2.6:.55,now,.15);
  AU.ph+=dt*(.38+f*1.25);const b=Math.pow(Math.max(0,Math.sin(AU.ph*Math.PI*2)),2);
  AU.breath.gain.setTargetAtTime(playing?(.012+f*.17)*b:0,now,.03);
  AU.drone.gain.setTargetAtTime(playing&&f>.22?(f-.22)*.22:0,now,.3);

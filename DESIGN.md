@@ -162,3 +162,6 @@ Cara memberi masukan: tandai ID dengan ✅ pakai / ❌ buang / ✏️ ubah, atau
 7. Kalimantan Barat terluas: 38.310 ha; Papua Selatan 25.838 ha. (SiPongi via GoodStats)
 8. Ticker: 21 Agu 2026, 1.842 titik panas di Kalimantan (BNPB via NU Online). Juli 2026 hampir 95 ribu ha dalam sebulan (Katadata). KLIA berasap, rute KL–Singapura (Firefly) ditangguhkan (CNBC Indonesia/Reuters).
 9. Ticker (cek 8 Nov 2026): 46 armada udara di 12 provinsi, 5 Nov (BNPB via Kompas.com); ISPU Balikpapan 535, 2 Nov (BNPB via Disway); titik panas Papua Selatan +66% (BNPB via Kompas.com); per 7 Nov 2.733 titik panas, ~1.430 ha masih terbakar (BNPB via Harian Jogja).
+
+## Aset audio
+- `audio/api.mp3`: potongan 20 detik (loop) dari "Campfire 01" oleh HECKFRICKER, Freesound #729395, lisensi CC0. Dinormalisasi, mono, 80 kbps.
