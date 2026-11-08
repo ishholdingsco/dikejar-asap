@@ -449,7 +449,7 @@ $('sub').addEventListener('click',()=>{if(!subUrl)return;if(mode==='play')pause(
 
 // ================= Update =================
 const fireHeat=()=>clamp(.1+(S.ispu/500)*.3+S.fire*.6,0,1.5);
-const RAIN_DUR=8.4;
+const RAIN_DUR=12.6;
 const visDist=()=>Math.max(8,70-57*clamp((S.ispu-30)/420)+(S.rain>0?10:0)-(S.dust||0)*22);
 function update(dt){
  S.t+=dt;S.speed=Math.min(30,S.speed+dt*.12);S.dist+=S.speed*(S.mudT>0?.55:1)*dt;S.mudT=Math.max(0,S.mudT-dt);S.dust=Math.max(0,S.dust-dt/3.2);
