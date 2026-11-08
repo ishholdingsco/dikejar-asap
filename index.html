@@ -1028,7 +1028,7 @@ function render(){
  if(!W)return;
  const introE=introCam();
  if(mode==='play'&&!(S.intro>0)){const sk=S.slide>0&&S.py<=.01?clamp(Math.min((SLIDE_DUR-S.slide)/.1,S.slide/.15)):0;
-  CAMX=S.px*.32;ROLL=(S.px-S.lane)*.045+Math.sin(S.ph)*.004;CAMH=1.7+Math.abs(Math.sin(S.ph))*.035-sk*.32+S.py*.22-S.land*.25;}
+  CAMX=0;ROLL=0;CAMH=1.7+Math.abs(Math.sin(S.ph))*.035-sk*.32+S.py*.22-S.land*.25;}
  else if(!(S.intro>0)){CAMX=0;ROLL=0;if(mode==='menu')CAMH=1.7;}
  const f=S.ispu/500,ra=S.rain>0?clamp(Math.min(S.rain,RAIN_DUR-S.rain)):0,dying=mode==='dying'||mode==='over';
  VIS=visDist();
