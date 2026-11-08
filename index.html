@@ -235,7 +235,8 @@ const TIER_TOAST=["","Kualitas udara sedang. Tidak perlu khawatir.","Kualitas ud
 const CAUSE={
  ispa:"Kamu meninggal karena ISPA",
  bulldozer:"Kamu tertabrak bulldozer SJP<small>Perusahaan melaporkan sedikit insiden dengan “batang pohon”.</small>",
- ekskavator:"Kamu terlindas ekskavator SJP<small>“Pohon” sedang dilakukan land clearing untuk penanaman.</small>",
+ excavator:"Kamu terlindas excavator SJP<small>“Batang pohon” berhasil dirubuhkan untuk pembukaan lahan sawit.</small>",
+ truk:"Kamu terlindas truk sawit SJP<small>“Batang pohon” hancur terlindas <s>truk</s> sistem.</small>",
  gambut:"Kamu terperosok ke gambut yang terbakar<small>Tidak ada apa-apa di sini, hanya orang<s>utan</s> terbakar.</small>",
  baliho:"Kamu menabrak spanduk zero burning<small>Zero burning. Zero victim.</small>",
  api:"Api menyusulmu",
@@ -325,11 +326,11 @@ function newDecor(side,wz,row=0){
 function spawnRow(wz){
  const lanes=[-1,0,1].sort(()=>Math.random()-.5);
  const n=(S.dist>220&&Math.random()<.42)?2:1;
- const types=['kayu','kayu','palang','palang','bulldozer','bulldozer','ekskavator'];
+ const types=['kayu','kayu','palang','palang','bulldozer','bulldozer','excavator','truk'];
  if(S.dist>140)types.push('gambut','gambut');
  for(let i=0;i<n;i++){
   let ty=pick(types);
-  const heavy=t=>t==='bulldozer'||t==='ekskavator';if(i===1&&heavy(ty)&&S.objs.some(o=>o.wz===wz&&heavy(o.type)))ty='kayu';
+  const heavy=t=>t==='bulldozer'||t==='excavator'||t==='truk';if(i===1&&heavy(ty)&&S.objs.some(o=>o.wz===wz&&heavy(o.type)))ty='kayu';
   S.objs.push({type:ty,lane:lanes[i],wz,len:ty==='gambut'?2.6:.45,seed:Math.random(),cracks:ty==='gambut'?mkCracks():null});
  }
  const free=lanes[n];
@@ -376,7 +377,7 @@ function pause(){mode='paused';$('pause').classList.remove('hide');if(AU.ac)AU.a
 function resume(){mode='play';$('pause').classList.add('hide');if(AU.ac)AU.ac.resume();last=performance.now();}
 $('btnStart').onclick=start;$('btnAgain').onclick=start;
 // Bagikan hasil: di HP pakai menu bagikan bawaan, di desktop buka X dengan teks terisi
-const CAUSE_SHORT={ispa:'meninggal karena ISPA',bulldozer:'tertabrak bulldozer PT SJP',ekskavator:'terlindas ekskavator PT SJP',gambut:'terperosok ke gambut terbakar',baliho:'menabrak spanduk zero burning',api:'disusul api'};
+const CAUSE_SHORT={ispa:'meninggal karena ISPA',bulldozer:'tertabrak bulldozer PT SJP',excavator:'terlindas excavator PT SJP',truk:'terlindas truk sawit PT SJP',gambut:'terperosok ke gambut terbakar',baliho:'menabrak spanduk zero burning',api:'disusul api'};
 $('btnShare').onclick=()=>{const url=location.origin+location.pathname,
   text=`Aku bertahan ${Math.floor(S.dist)} m sebelum ${CAUSE_SHORT[S.cause]||'tumbang'}.
 Tersangka dari PT SJP: 0.
@@ -453,7 +454,8 @@ function update(dt){
   if(o.type==='kayu'&&S.py<.5){o.hit=true;stumble();}
   else if(o.type==='palang'&&S.slide<=0){o.hit=true;die('baliho');}
   else if(o.type==='bulldozer'){o.hit=true;die('bulldozer');}
-  else if(o.type==='ekskavator'){o.hit=true;die('ekskavator');}
+  else if(o.type==='excavator'){o.hit=true;die('excavator');}
+  else if(o.type==='truk'){o.hit=true;die('truk');}
   else if(o.type==='gambut'&&S.py<.12){o.hit=true;die('gambut');}
   if(mode!=='play')return;
  }
@@ -798,7 +800,7 @@ function drawDozer(o,z){
  workLights(s,[[-.42,.86],[.42,.86],[-.22,1.62],[.22,1.62]],o,z,true);
  ctx.restore();
 }
-// Ekskavator tampak depan: track lebar, rumah putar dengan kabin, boom bersilinder hidrolik, bucket berisi tanah
+// Excavator tampak depan: track lebar, rumah putar dengan kabin, boom bersilinder hidrolik, bucket berisi tanah
 function drawExc(o,z){
  const{g,s,a}=machine(o,z),T=mtone(z),cyc=(S.t*.5+o.seed)%1,dig=Math.sin(cyc*Math.PI*2),by=.62+dig*.38,curl=Math.cos(cyc*Math.PI*2);
  ctx.save();ctx.translate(g.x,g.y);
@@ -823,6 +825,35 @@ function drawExc(o,z){
   if(dig>0){ctx.fillStyle=T.soil;for(let k=0;k<8;k++){const ph=(S.t*2+k/8)%1;ctx.globalAlpha=a*(1-ph);const r=Math.max(1,.03*s*(1-ph*.5));ctx.fillRect((.07+Math.sin(k*3.1)*.17)*s-r,-(by-ph*by)*s,r*2,r*2);}ctx.globalAlpha=a;}
   ctx.globalAlpha=1;}
  workLights(s,[[-.55,1.5],[-.28,1.5],[.05,1.8]],o,z,false);
+ ctx.restore();
+}
+// Truk pengangkut sawit tampak depan: kabin, gril, lampu, bak kayu tinggi berisi gunungan tandan buah sawit
+function drawTruck(o,z){
+ const{g,s,a}=machine(o,z),T=mtone(z),bob=Math.sin(S.t*9+o.seed*7)*.012;
+ const fruit=k=>rgb(mixc(mixc(hexRgb(['#1f0c0a','#4a120c','#7a2414','#a3381c'][k]),T.c0,.35),[200,86,34],T.hot*.3));
+ ctx.save();ctx.translate(g.x,g.y);
+ if(a>0){ctx.globalAlpha=a;
+  exhaust(.7,1.55,s,a,T.c0,o.seed);
+  // bak kayu di belakang kabin (lebih tinggi & lebar), papan vertikal
+  ctx.fillStyle=vgrad(1.0,1.78,T.warm,T.dark,s);box(-.76,1.0+bob,1.52,.78,s);
+  ctx.fillStyle=T.dark;for(let i=0;i<7;i++)box(-.74+i*.245,1.0+bob,.035,.78,s);box(-.76,1.74+bob,1.52,.05,s);
+  // gunungan tandan sawit di atas bak
+  const heap=[[-.58,1.84,.15],[-.34,1.92,.17],[-.08,1.97,.18],[.18,1.93,.17],[.44,1.88,.16],[.62,1.82,.12],[-.46,2.06,.13],[-.2,2.14,.15],[.07,2.18,.15],[.33,2.1,.14],[-.06,2.32,.12],[.2,2.28,.11]];
+  heap.forEach(([x,y,r],i)=>{ctx.fillStyle=fruit(i%3===0?0:i%3===1?1:2);ctx.beginPath();ctx.ellipse(x*s,-(y+bob)*s,r*s,r*.85*s,0,0,7);ctx.fill();
+   ctx.fillStyle=fruit(3);for(let k=0;k<3;k++){ctx.beginPath();ctx.arc((x+Math.cos(i+k*2.1)*r*.45)*s,-(y+bob+Math.sin(i*1.7+k*2.1)*r*.4)*s,Math.max(.6,r*.22*s),0,7);ctx.fill();}});
+  // ban & sasis
+  ctx.fillStyle=T.dark;rbox(-.72,0,.26,.46,.06,s);rbox(.46,0,.26,.46,.06,s);box(-.5,.2,1,.14,s);
+  // kabin
+  ctx.fillStyle=vgrad(.4,1.3,T.lite,T.warm,s);rbox(-.62,.4+bob,1.24,.92,.06,s);
+  ctx.fillStyle=vgrad(.9,1.24,T.glassTop,T.glassBot,s);rbox(-.54,.9+bob,1.08,.34,.04,s);          // kaca depan
+  ctx.fillStyle=T.base;box(-.02,.9+bob,.04,.34,s);                                                    // tiang tengah kaca
+  ctx.fillStyle=T.dark;ctx.beginPath();ctx.arc(-.3*s,-(1.08+bob)*s,.07*s,0,7);ctx.fill();box(-.39,.9+bob,.18,.13,s); // sopir
+  ctx.fillStyle=T.lite;box(-.66,1.28+bob,1.32,.05,s);                                                 // atap
+  // gril, bumper, spion
+  ctx.fillStyle=T.dark;box(-.36,.5+bob,.72,.3,s);ctx.fillStyle=T.lite;for(let i=0;i<4;i++)box(-.33,.54+i*.065+bob,.66,.025,s);
+  ctx.fillStyle=T.dark;box(-.68,.3+bob,1.36,.13,s);box(-.82,.98+bob,.1,.16,s);box(.72,.98+bob,.1,.16,s);
+  ctx.globalAlpha=1;}
+ workLights(s,[[-.5,.66+bob],[.5,.66+bob]],o,z,false);
  ctx.restore();
 }
 function drawLog(o,z){const p=proj(o.lane*LW,0,z),s=p.s,w=LW*.92*s,h=.46*s,c=dcol(z);ctx.globalAlpha=fogVis(z);ctx.fillStyle=rgb(c);ctx.beginPath();
@@ -953,7 +984,7 @@ function render(){
  for(const it of list){const z=it.z;
   if(it.player){if(mode!=='over')drawRunner();continue;}
   if(it.ghost){drawPerson(S.ghost.x,z,fogVis(z)*clamp(Math.min(S.ghost.life,.9-S.ghost.life)*4));continue;}
-  if(it.o){const o=it.o;if(o.type==='kayu')drawLog(o,z);else if(o.type==='palang')drawBanner(o,z);else if(o.type==='bulldozer')drawDozer(o,z);else if(o.type==='ekskavator')drawExc(o,z);else if(o.type==='gambut')drawGambut(o,z);else drawPickup(o,z);continue;}
+  if(it.o){const o=it.o;if(o.type==='kayu')drawLog(o,z);else if(o.type==='palang')drawBanner(o,z);else if(o.type==='bulldozer')drawDozer(o,z);else if(o.type==='excavator')drawExc(o,z);else if(o.type==='truk')drawTruck(o,z);else if(o.type==='gambut')drawGambut(o,z);else drawPickup(o,z);continue;}
   const d=it.d,fv=fogVis(z);if(fv<=0)continue;
   if(d.kind==='tunggul')drawStump(d,z);
   else if(d.kind==='baliho')drawBaliho(d,z);
