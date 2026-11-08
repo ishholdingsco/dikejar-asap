@@ -414,7 +414,7 @@ function start(intro){aInit();aMaster(.9,.05);reset();mode='play';
 // suara intro (CC0): gemuruh api asli (jamesdrake89/Freesound #636178) + whoosh kamera (timothyd4y/Freesound #586110)
 function playIntroSfx(){if(!AU.ac||!AU.introBuf||AU.introSrc)return;const s=AU.ac.createBufferSource(),g=AU.ac.createGain();s.buffer=AU.introBuf;g.gain.value=.9;s.connect(g).connect(AU.m);s.start();AU.introSrc=s;AU.introGain=g;s.onended=()=>{AU.introSrc=null;};}
 function stopIntroSfx(){if(AU.introGain&&AU.ac)AU.introGain.gain.setTargetAtTime(0,AU.ac.currentTime,.12);}
-function endIntro(){S.intro=0;$('hud').classList.remove('intro');$('introCard').classList.remove('show');CAMH=1.7;CAMZ=3.2;HOR=HOR0;farKey='';S.flashW=1;try{burst('lowpass',140,1,.5,.5);}catch(e){}$('hud').classList.add('pop');setTimeout(()=>$('hud').classList.remove('pop'),1400);
+function endIntro(){S.intro=0;$('hud').classList.remove('intro');$('introCard').classList.remove('show');CAMH=1.7;CAMZ=3.2;HOR=HOR0;farKey='';S.shake=.22;S.flashW=1;try{burst('lowpass',140,1,.5,.5);}catch(e){}$('hud').classList.add('pop');setTimeout(()=>$('hud').classList.remove('pop'),1400);
  say('SJP Care','Selamat pagi dari PT Sawit Juga Pohon. Sawit untuk masa depan yang ~~cerah~~ gelap berasap.');}
 function pause(){mode='paused';$('pause').classList.remove('hide');if(AU.ac)AU.ac.suspend();}
 function resume(){mode='play';$('pause').classList.add('hide');if(AU.ac)AU.ac.resume();last=performance.now();}
